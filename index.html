@@ -1,0 +1,208 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ABM</title>
+
+  <script src="js/jquery-1.10.2.js"></script>
+  <script src="js/funcionesJquery.js"></script>
+   <script src="js/funcionesJavaScript.js"></script>
+  <script src="js/login.js"></script>
+
+  <script src="js/loginServices.js"></script>
+  <script src="js/services.js"></script>
+   <script src="js/productoServices.js"></script>
+   <script src="js/usuarioServices.js"></script>
+
+  <link rel="stylesheet" href="css/style.css">  
+
+  <link rel="stylesheet" href="js/jquery-ui-1.11.4.custom/jquery-ui.css">
+  <script src="js/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+
+  <style>
+/*    body { font-size: 62.5%; }
+    label, input { display:block; }
+    input.text { margin-bottom:12px; width:95%; padding: .4em; }
+    fieldset { padding:0; border:0; margin-top:25px; }
+    h1 { font-size: 1.2em; margin: .6em 0; }
+    div#users-contain { width: 350px; margin: 20px 0; }
+    div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+    div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+    .ui-dialog .ui-state-error { padding: .3em; }
+    .validateTips { border: 1px solid transparent; padding: 0.3em; }*/
+  </style>
+  
+</head>
+<body >
+  <div id="divContainer" style="display:none">
+
+<!--     <div id="divLogin" align="center">
+      <div class="divAcessContainer"> 
+        <h2> Inicia sesión para acceder</h2>  
+        <fieldset>
+         </fieldset> 
+          <label for="name">Nombre</label>
+          <input type="text" id="nombre">
+          <br><br>
+          <label for="mail">mail</label>
+          <input type="text" id="mail">
+          <br><br>
+          <label for="clave">Clave</label>
+          <input type="password" id="clave">
+          <br><br>
+          <button id="btnLogin" class="buttonLogin" >Acceder</button>  
+       </div>
+
+     </div> -->
+
+    <div id="botoneraSession" class="botoneraSession">
+        <div class="buttonSessionContainer">          
+          <button id="btnPerfil" class="button">Perfil</button>
+          <button id="btnLogout" class="button">Logout</button>
+        </div>
+    </div>    
+    
+    <div id="botoneraSession" class="containerButtonsABM">
+    
+      <div id="botoneraABMProducto"> 
+        <div class="buttonABMContainerProducto">         
+          <button id="create-producto">Crear un nuevo producto</button>
+          <button id="getProductos" >Listado de productos</button>
+        </div>    
+      </div>  
+      <div id="botoneraABMUsuario">  
+        <div class="buttonABMContainerUsuario">     
+          <button id="create-user">Crear un nuevo usuario</button>
+          <button id="actualizarResultados" >Listado de usuarios</button>
+        </div>  
+      </div>  
+
+    </div>
+
+    <div id="resultados">
+    </div>  
+
+
+    
+
+    <!-- Dialogs -->
+<!--     <div id="dialog-confirm" title="Desea eliminar?">
+      <p id="p-confirm"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;" >  
+      </span>¿Estas seguro de eliminar al usuario?</p> 
+    </div> -->
+    
+    <div id="dialog-logout" title="Logout?">
+      <p id="p-confirm"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;" >  
+      </span>¿Estas seguro que desea desloguearse?</p> 
+    </div>
+ 
+    <div id="dialog-form" title="Crear nuevo usuario">
+      <p class="validateTips">Todos los campos son obligatorios.</p> 
+      <form>
+        <fieldset>
+          <label for="nombreAdd">Nombre</label>
+          <input type="text" id="nombreAdd" class="text ui-widget-content ui-corner-all">
+          <label for="mailAdd">Mail</label>
+          <input type="text" id="mailAdd"  class="text ui-widget-content ui-corner-all">
+          <label for="claveAdd">Clave</label>
+          <input type="claveAdd" id="claveAdd" class="text ui-widget-content ui-corner-all">
+          <label for="tipoUsuarioAdd">Tipo</label>
+          <select id="tipoUsuarioAdd" class="select ui-widget-content ui-corner-all">
+                <option value="administrado">administrador</option>
+                <option value="comprado">comprador</option>
+                <option value="vendedor">vendedor</option>
+          </select>
+          <!-- Allow form submission with keyboard without duplicating the dialog button -->
+<!--           <input type="submit" tabindex="-1" style="position:absolute; top:-1000px"> -->
+        </fieldset>
+      </form>
+    </div>
+
+    <div id="dialog-update" title="Modificar usuario">
+      <p class="validateTips">Todos los campos son obligatorios.</p> 
+      <form>
+        <fieldset>
+           <input type="hidden" id="idUsuario">
+          <label for="nameUpdate">Name</label>
+          <input type="text" id="nameUpdate" class="text ui-widget-content ui-corner-all">
+          <label for="emailUpdate">Email</label>
+          <input type="text" id="emailUpdate"  class="text ui-widget-content ui-corner-all">
+        </fieldset>
+      </form>
+    </div>
+
+
+
+    <div id="dialog-Eliminar" title="Eliminar usuario">
+      <p>Usuario a eliminar.</p> 
+      <form>
+        <fieldset>
+         <input type="hidden" id="idUsuarioEliminar">
+          <label for="nameEliminar">Nombre</label>
+          <input type="text" id="nameEliminar" class="text ui-widget-content ui-corner-all"  readonly>
+          <label for="emailEliminar">Mail</label>
+          <input type="text" id="emailEliminar"  class="text ui-widget-content ui-corner-all" readonly>
+        </fieldset>
+      </form>
+    </div>
+
+    <div id="dialog-AddProducto" title="Agregar producto">
+      <form>
+        <fieldset>
+          <label for="nameProducto">Nombre</label>
+          <input type="text" id="nameProducto" class="text ui-widget-content ui-corner-all">
+          <label for="porcentajeProducto">Porcentaje</label>
+          <input type="text" id="porcentajeProducto" class="text ui-widget-content ui-corner-all">
+        </fieldset>
+      </form>
+    </div>
+
+    <div id="dialog-DeleteProducto" title="Eliminar producto">
+      <form>
+        <fieldset>
+          <input type="hidden" id="idProductoEliminar">
+          <label for="nameProductoEliminar">Nombre</label>
+          <input type="text" id="nameProductoEliminar" class="text ui-widget-content ui-corner-all" readonly>
+        </fieldset>
+      </form>
+    </div>
+
+
+    <div id="dialog-UpdateProducto" title="Modificar producto">
+      <form>
+        <fieldset>
+          <input type="hidden" id="idProductoActualizar">
+          <label for="nameProductoActualizar">Nombre</label>
+          <input type="text" id="nameProductoActualizar" class="text ui-widget-content ui-corner-all">
+        </fieldset>
+      </form>
+    </div>
+
+    <div id="dialog-Perfil" title="Mi perfil">
+      <p class="validateTips">Todos los campos son obligatorios.</p> 
+      <form>
+        <fieldset>
+         <input type="hidden" id="idPerfil">
+          <label for="namePerfil">Name</label>
+          <input type="text" id="namePerfil" class="text ui-widget-content ui-corner-all">
+          <label for="emailPerfil">Email</label>
+          <input type="text" id="emailPerfil"  class="text ui-widget-content ui-corner-all">
+          <label for="password">Password</label>
+          <input type="password" id="passwordPerfil" class="text ui-widget-content ui-corner-all">
+          <label for="tipoUsuario">Tipo de usuario</label>
+          <input type="text" id="tipoUsuario" class="text ui-widget-content ui-corner-all" 
+                  readonly>
+          <label for="foto">Foto</label>
+
+          <input type="file" name="fotoPerfil" id="fotoPerfil" onchange="SubirFoto()" />
+          <div id="divFotoPerfil"></div>
+<!--           <img id='fotoPerfil'  src=""  alt='foto de perfil' height='42' width='42'> -->
+          <!-- Allow form submission with keyboard without duplicating the dialog button -->
+          <!-- <input type="submit" tabindex="-1" style="position:absolute; top:-1000px"> -->
+        </fieldset>
+      </form>
+    </div>
+
+
+  </div>
+</body>
+</html>
